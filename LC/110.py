@@ -5,21 +5,17 @@
 #         self.left = left
 #         self.right = right
 class Solution(object):
-    def rightSideView(self, root):
+    def isBalanced(self, root):
         """
         :type root: TreeNode
-        :rtype: List[int]
+        :rtype: bool
         """
-        ans = []
-
         def traverse(node, depth):
             if not node:
-                return
-            if depth > len(ans)-1:
-                ans.append(node.val)
-            
-            traverse(node.right, depth + 1)
-            traverse(node.left, depth + 1)
-        
-        traverse(root, 0)
-        return ans
+                return (0, True)
+            (depth1, val1) = traverse(node.left, depth + 1)
+            (depth2, val2) = traverse(node.right, depth + 1)
+            return (depth, abs(depth1 - depth2) < 2 and val1 and val2)
+
+        a, b = traverse(root, 0)
+        return b

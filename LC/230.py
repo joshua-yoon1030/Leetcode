@@ -5,21 +5,19 @@
 #         self.left = left
 #         self.right = right
 class Solution(object):
-    def rightSideView(self, root):
+    def kthSmallest(self, root, k):
         """
         :type root: TreeNode
-        :rtype: List[int]
+        :type k: int
+        :rtype: int
         """
         ans = []
-
-        def traverse(node, depth):
+        def traverse(node):
             if not node:
                 return
-            if depth > len(ans)-1:
-                ans.append(node.val)
-            
-            traverse(node.right, depth + 1)
-            traverse(node.left, depth + 1)
+            traverse(node.left)
+            ans.append(node.val)
+            traverse(node.right)
         
-        traverse(root, 0)
-        return ans
+        traverse(root)
+        return ans[k-1]

@@ -5,21 +5,19 @@
 #         self.left = left
 #         self.right = right
 class Solution(object):
-    def rightSideView(self, root):
+    def invertTree(self, root):
         """
         :type root: TreeNode
-        :rtype: List[int]
+        :rtype: TreeNode
         """
-        ans = []
-
-        def traverse(node, depth):
+        def traverse(node):
             if not node:
                 return
-            if depth > len(ans)-1:
-                ans.append(node.val)
             
-            traverse(node.right, depth + 1)
-            traverse(node.left, depth + 1)
-        
-        traverse(root, 0)
-        return ans
+            temp = node.left
+            node.left = node.right
+            node.right = temp
+            traverse(node.left)
+            traverse(node.right)
+        traverse(root)
+        return root
